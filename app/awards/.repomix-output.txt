@@ -1,0 +1,179 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files and files not matching ignore patterns, combined into a single document by Repomix.
+The content has been processed where empty lines have been removed.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+4. Repository files, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: **/*, .cursorrules, .cursor/rules/*, .clinerules, CLAUDE.md
+- Files matching these patterns are excluded: .*.*, **/*.pbxproj, **/node_modules/**, **/dist/**, **/build/**, **/compile/**, **/*.spec.*, **/*.pyc, **/.env, **/.env.*, **/*.env, **/*.env.*, **/*.lock, **/*.lockb, **/package-lock.*, **/pnpm-lock.*, **/*.tsbuildinfo
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Empty lines have been removed from all files
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+<additional_info>
+
+</additional_info>
+
+</file_summary>
+
+<directory_structure>
+layout.tsx
+page.tsx
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="layout.tsx">
+import { Metadata } from 'next'
+import siteMetadata from '@/data/siteMetadata'
+export const metadata: Metadata = {
+  title: 'Australian Web Awards Leaderboard',
+  description: 'All-time winners of the Australian Web Awards - celebrating digital excellence since 2005',
+}
+export default function AwardsLayout({ children }) {
+  return (
+    <div className="divide-y divide-gray-200 dark:divide-gray-700">
+      {children}
+    </div>
+  )
+}
+</file>
+
+<file path="page.tsx">
+import Link from '@/components/Link'
+import { awardWinners } from '@/data/awardsWinners'
+export default function AwardsPage() {
+  // Get unique years for display
+  const years = [...new Set(awardWinners.map(winner => winner.year))].sort((a, b) => b - a)
+  // Get companies with the most wins for the leaderboard
+  const topCompanies = (() => {
+    const companyWins: Record<string, number> = {}
+    awardWinners.forEach(winner => {
+      companyWins[winner.company] = (companyWins[winner.company] || 0) + 1
+    })
+    return Object.entries(companyWins)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([company, wins]) => ({ company, wins }))
+  })()
+  return (
+    <div>
+      <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+          Australian Web Awards
+        </h1>
+        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+          All-time leaderboard of Australian Web Awards winners since 2005
+        </p>
+      </div>
+      {/* Top Companies */}
+      <div className="py-10">
+        <h2 className="text-2xl font-extrabold mb-6 text-gray-900 dark:text-gray-100">
+          Top Winning Agencies
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {topCompanies.map(({ company, wins }) => (
+            <div
+              key={company}
+              className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-700"
+            >
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">{company}</h3>
+              <p className="text-gray-500 dark:text-gray-400">{wins} Award{wins !== 1 ? 's' : ''}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Winners by Year */}
+      {years.map(year => (
+        <div key={year} className="py-10">
+          <h2 className="text-2xl font-extrabold mb-6 text-gray-900 dark:text-gray-100">
+            {year} Winners
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-800">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    Category
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    Winner
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    Project
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                {awardWinners
+                  .filter(winner => winner.year === year)
+                  .sort((a, b) => a.category.localeCompare(b.category))
+                  .map((winner, index) => (
+                    <tr key={`${winner.category}-${index}`} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        {winner.category}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        {winner.company}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        {winner.project}
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+      <div className="py-6">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Data sourced from the <a
+            href="https://webawards.com.au/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+          >
+            Australian Web Awards
+          </a> - celebrating digital excellence since 2005.
+        </p>
+      </div>
+    </div>
+  )
+}
+</file>
+
+</files>

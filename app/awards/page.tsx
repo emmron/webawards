@@ -2,7 +2,7 @@ import Link from '@/components/Link'
 import { awardWinners } from '@/data/awardsWinners'
 import AwardsClient from '@/components/AwardsClient'
 
-export default function HomePage() {
+export default function AwardsPage() {
   // Get unique years for display - ensure we get ALL years
   const years = [...new Set(awardWinners.map(winner => winner.year))].sort((a, b) => b - a)
 

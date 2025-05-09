@@ -1,0 +1,21 @@
+{
+  "web": {
+    "provider": "openrouter",
+    "model": "perplexity/sonar-pro"
+  },
+  "plan": {
+    "fileProvider": "openrouter",
+    "thinkingProvider": "openrouter",
+    "fileModel": "anthropic/claude-3.7-sonnet",
+    "thinkingModel": "anthropic/claude-3.7-sonnet"
+  },
+  "repo": {
+    "provider": "openrouter",
+    "model": "anthropic/claude-3.7-sonnet"
+  },
+  "doc": {
+    "provider": "openrouter",
+    "model": "x-ai/grok-3-beta"
+  },
+  "ide": "cursor"
+}
