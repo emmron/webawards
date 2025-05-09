@@ -211,7 +211,7 @@ export default function HomePage() {
       {/* Leaderboards Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8">
         {/* Top Companies */}
-        <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transform transition-all hover:shadow-xl">
           <div className="flex items-center mb-6">
             <div className="rounded-full bg-blue-100 dark:bg-blue-900 p-2 mr-3">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -222,61 +222,82 @@ export default function HomePage() {
               Top Winning Companies
             </h2>
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead className="bg-gray-50 dark:bg-gray-700">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Rank</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Company</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Total Awards</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">1st Places</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Years Active</th>
-                </tr>
-              </thead>
-              <tbody>
-                {companyStats.map(({ company, wins, firstPlaces, yearSpan }, index) => (
-                  <tr
-                    key={company}
-                    className={`${index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-700'} hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors`}
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      {index < 3 ? (
-                        <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-white font-bold ${
-                          index === 0 ? 'bg-yellow-500 ring-4 ring-yellow-200 dark:ring-yellow-800' :
-                          index === 1 ? 'bg-gray-400 ring-4 ring-gray-200 dark:ring-gray-700' :
-                          'bg-amber-600 ring-4 ring-amber-200 dark:ring-amber-800'
-                        } shadow-md`}>
-                          {index === 0 ? '1' : index === 1 ? '2' : '3'}
-                        </span>
-                      ) : (
-                        <span className="text-gray-900 dark:text-white font-medium">#{index + 1}</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white font-medium">
-                      {company}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-3 py-1.5 text-sm font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 shadow">
-                        {wins}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-3 py-1.5 text-sm font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100 shadow">
-                        {firstPlaces}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 font-medium">
-                      {yearSpan}
-                    </td>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-100 dark:border-gray-700">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/40 dark:to-indigo-900/40">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Rank</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Company</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Total Awards</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">1st Places</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Years Active</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  {companyStats.map(({ company, wins, firstPlaces, yearSpan }, index) => (
+                    <tr
+                      key={company}
+                      className={`${
+                        index % 2 === 0
+                          ? 'bg-white dark:bg-gray-800'
+                          : 'bg-blue-50/30 dark:bg-blue-900/10'
+                      } hover:bg-blue-100 dark:hover:bg-blue-800/30 transition-colors duration-150 group`}
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {index < 3 ? (
+                          <span className={`inline-flex items-center justify-center w-10 h-10 rounded-full text-white font-bold ${
+                            index === 0
+                              ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 ring-4 ring-yellow-200 dark:ring-yellow-800/50'
+                              : index === 1
+                                ? 'bg-gradient-to-r from-gray-300 to-gray-500 ring-4 ring-gray-200 dark:ring-gray-700/50'
+                                : 'bg-gradient-to-r from-amber-500 to-amber-700 ring-4 ring-amber-200 dark:ring-amber-800/50'
+                          } shadow-md transform group-hover:scale-110 transition-transform duration-200`}>
+                            {index === 0
+                              ? <span className="flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg></span>
+                              : index + 1
+                            }
+                          </span>
+                        ) : (
+                          <span className="text-gray-900 dark:text-white font-medium pl-4">#{index + 1}</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors duration-150">{company}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">{wins} awards across {yearSpan}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-2 text-sm font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800/70 dark:text-green-100 shadow-sm group-hover:shadow group-hover:bg-green-200 dark:group-hover:bg-green-700 transition-all duration-150">
+                          {wins}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-2 text-sm font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800/70 dark:text-yellow-100 shadow-sm group-hover:shadow group-hover:bg-yellow-200 dark:group-hover:bg-yellow-700 transition-all duration-150 flex items-center justify-center w-12 h-12">
+                          <div className="relative">
+                            <span className="absolute -top-1 -right-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-600 dark:text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                              </svg>
+                            </span>
+                            {firstPlaces}
+                          </div>
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-2 text-sm font-medium rounded-md bg-indigo-50 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-800/50 transition-colors duration-150">
+                          {yearSpan}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         {/* Top Agencies */}
-        <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transform transition-all hover:shadow-xl">
           <div className="flex items-center mb-6">
             <div className="rounded-full bg-purple-100 dark:bg-purple-900 p-2 mr-3">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-purple-600 dark:text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -287,56 +308,77 @@ export default function HomePage() {
               Top Agencies
             </h2>
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead className="bg-gray-50 dark:bg-gray-700">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Rank</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Agency</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Total Awards</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">1st Places</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Years Active</th>
-                </tr>
-              </thead>
-              <tbody>
-                {agencyStats.map(({ agency, wins, firstPlaces, yearSpan }, index) => (
-                  <tr
-                    key={agency}
-                    className={`${index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-700'} hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors`}
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      {index < 3 ? (
-                        <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-white font-bold ${
-                          index === 0 ? 'bg-yellow-500 ring-4 ring-yellow-200 dark:ring-yellow-800' :
-                          index === 1 ? 'bg-gray-400 ring-4 ring-gray-200 dark:ring-gray-700' :
-                          'bg-amber-600 ring-4 ring-amber-200 dark:ring-amber-800'
-                        } shadow-md`}>
-                          {index === 0 ? '1' : index === 1 ? '2' : '3'}
-                        </span>
-                      ) : (
-                        <span className="text-gray-900 dark:text-white font-medium">#{index + 1}</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white font-medium">
-                      {agency}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-3 py-1.5 text-sm font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 shadow">
-                        {wins}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-3 py-1.5 text-sm font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100 shadow">
-                        {firstPlaces}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 font-medium">
-                      {yearSpan}
-                    </td>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-100 dark:border-gray-700">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/40 dark:to-indigo-900/40">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Rank</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Agency</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Total Awards</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">1st Places</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Years Active</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  {agencyStats.map(({ agency, wins, firstPlaces, yearSpan }, index) => (
+                    <tr
+                      key={agency}
+                      className={`${
+                        index % 2 === 0
+                          ? 'bg-white dark:bg-gray-800'
+                          : 'bg-purple-50/30 dark:bg-purple-900/10'
+                      } hover:bg-purple-100 dark:hover:bg-purple-800/30 transition-colors duration-150 group`}
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {index < 3 ? (
+                          <span className={`inline-flex items-center justify-center w-10 h-10 rounded-full text-white font-bold ${
+                            index === 0
+                              ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 ring-4 ring-yellow-200 dark:ring-yellow-800/50'
+                              : index === 1
+                                ? 'bg-gradient-to-r from-gray-300 to-gray-500 ring-4 ring-gray-200 dark:ring-gray-700/50'
+                                : 'bg-gradient-to-r from-amber-500 to-amber-700 ring-4 ring-amber-200 dark:ring-amber-800/50'
+                          } shadow-md transform group-hover:scale-110 transition-transform duration-200`}>
+                            {index === 0
+                              ? <span className="flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg></span>
+                              : index + 1
+                            }
+                          </span>
+                        ) : (
+                          <span className="text-gray-900 dark:text-white font-medium pl-4">#{index + 1}</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors duration-150">{agency}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">{wins} awards across {yearSpan}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-2 text-sm font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800/70 dark:text-blue-100 shadow-sm group-hover:shadow group-hover:bg-blue-200 dark:group-hover:bg-blue-700 transition-all duration-150">
+                          {wins}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-2 text-sm font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800/70 dark:text-yellow-100 shadow-sm group-hover:shadow group-hover:bg-yellow-200 dark:group-hover:bg-yellow-700 transition-all duration-150 flex items-center justify-center w-12 h-12">
+                          <div className="relative">
+                            <span className="absolute -top-1 -right-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-600 dark:text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                              </svg>
+                            </span>
+                            {firstPlaces}
+                          </div>
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-2 text-sm font-medium rounded-md bg-indigo-50 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-800/50 transition-colors duration-150">
+                          {yearSpan}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

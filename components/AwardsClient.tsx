@@ -306,32 +306,40 @@ export default function AwardsClient({ years, categories, awardWinners }: Awards
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
                           transition={{ duration: 0.2, delay: index * 0.05 }}
-                          className={`${index % 2 === 0 ? 'bg-white dark:bg-gray-900' : 'bg-gray-50 dark:bg-gray-800'} hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors`}
+                          className={`${index % 2 === 0 ? 'bg-white dark:bg-gray-900' : 'bg-gray-50 dark:bg-gray-800'} hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors cursor-pointer group border-l-4 ${
+                            winner.rank === 1
+                              ? 'border-yellow-500 dark:border-yellow-700'
+                              : winner.rank === 2
+                                ? 'border-gray-400 dark:border-gray-600'
+                                : winner.rank === 3
+                                  ? 'border-amber-600 dark:border-amber-800'
+                                  : 'border-transparent'
+                          }`}
                         >
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <td className="px-6 py-4 whitespace-nowrap">
                             {winner.rank === 1 ? (
-                              <span className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-bold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100 border-2 border-yellow-300 dark:border-yellow-600 shadow-md">
+                              <span className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-bold rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500 text-white dark:from-yellow-600 dark:to-yellow-800 border-2 border-yellow-300 dark:border-yellow-600 shadow-md group-hover:shadow-lg group-hover:scale-105 transform transition-all duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                                 </svg>
                                 1st Place
                               </span>
                             ) : winner.rank === 2 ? (
-                              <span className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-bold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 border-2 border-gray-300 dark:border-gray-600 shadow-md">
+                              <span className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-bold rounded-full bg-gradient-to-r from-gray-300 to-gray-500 text-white dark:from-gray-600 dark:to-gray-800 border-2 border-gray-300 dark:border-gray-600 shadow-md group-hover:shadow-lg group-hover:scale-105 transform transition-all duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                 </svg>
                                 2nd Place
                               </span>
                             ) : winner.rank === 3 ? (
-                              <span className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-bold rounded-full bg-amber-100 text-amber-800 dark:bg-amber-800 dark:text-amber-100 border-2 border-amber-300 dark:border-amber-600 shadow-md">
+                              <span className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-bold rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-white dark:from-amber-600 dark:to-amber-800 border-2 border-amber-300 dark:border-amber-600 shadow-md group-hover:shadow-lg group-hover:scale-105 transform transition-all duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 3rd Place
                               </span>
                             ) : (
-                              <span className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-medium rounded-full bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                              <span className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-medium rounded-full bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-all duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
@@ -339,64 +347,115 @@ export default function AwardsClient({ years, categories, awardWinners }: Awards
                               </span>
                             )}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 font-medium">
+                          <td className="px-6 py-4 whitespace-nowrap">
                             {selectedCategory === 'all' && !isSearching ? (
-                              <span className="px-2.5 py-0.5 bg-blue-50 dark:bg-blue-900 text-blue-800 dark:text-blue-100 rounded">
+                              <span className="px-2.5 py-1 bg-blue-50 dark:bg-blue-900 text-blue-800 dark:text-blue-100 rounded-lg shadow-sm group-hover:bg-blue-100 dark:group-hover:bg-blue-800 transition-colors duration-200">
                                 {winner.category}
                               </span>
-                            ) : winner.company}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 font-medium">
-                            {selectedCategory === 'all' && !isSearching ? winner.company : winner.agency}
-                          </td>
-                          <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
-                            {selectedCategory === 'all' && !isSearching ? (
-                              winner.agency
                             ) : (
-                              <>
+                              <div>
+                                <div className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">{winner.company}</div>
+                                {winner.rank <= 3 && (
+                                  <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                    Winner of {winner.category}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {selectedCategory === 'all' && !isSearching ? (
+                              <div>
+                                <div className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">{winner.company}</div>
+                              </div>
+                            ) : (
+                              <div>
+                                {winner.agency ? (
+                                  <div className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">{winner.agency}</div>
+                                ) : (
+                                  <div className="text-gray-400 dark:text-gray-600 italic">No agency listed</div>
+                                )}
+                              </div>
+                            )}
+                          </td>
+                          <td className="px-6 py-4">
+                            {selectedCategory === 'all' && !isSearching ? (
+                              winner.agency ? (
+                                <div className="font-medium text-gray-800 dark:text-gray-200">{winner.agency}</div>
+                              ) : (
+                                <div className="text-gray-400 dark:text-gray-600 italic">No agency listed</div>
+                              )
+                            ) : (
+                              <div className="space-y-2">
                                 {winner.url ? (
                                   <a
                                     href={winner.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                                    className="font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 inline-flex items-center group-hover:underline"
                                   >
                                     {winner.project}
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
                                   </a>
                                 ) : (
-                                  <span className="font-medium">{winner.project}</span>
+                                  <span className="font-medium text-gray-800 dark:text-gray-200">{winner.project}</span>
                                 )}
                                 {winner.description && (
-                                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-md">
-                                    {winner.description.length > 120 ?
-                                      `${winner.description.substring(0, 120)}...` :
-                                      winner.description}
-                                  </p>
+                                  <div className="relative">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md pr-5 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-200">
+                                      {winner.description.length > 120 ?
+                                        `${winner.description.substring(0, 120)}...` :
+                                        winner.description}
+                                    </p>
+                                    {winner.description.length > 120 && (
+                                      <span className="absolute right-0 top-0 text-blue-500 dark:text-blue-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                      </span>
+                                    )}
+                                  </div>
                                 )}
-                              </>
+                              </div>
                             )}
                           </td>
                           {(selectedCategory === 'all' && !isSearching) && (
-                            <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
-                              {winner.url ? (
-                                <a
-                                  href={winner.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                                >
-                                  {winner.project}
-                                </a>
-                              ) : (
-                                <span className="font-medium">{winner.project}</span>
-                              )}
-                              {winner.description && (
-                                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-md">
-                                  {winner.description.length > 120 ?
-                                    `${winner.description.substring(0, 120)}...` :
-                                    winner.description}
-                                </p>
-                              )}
+                            <td className="px-6 py-4">
+                              <div className="space-y-2">
+                                {winner.url ? (
+                                  <a
+                                    href={winner.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 inline-flex items-center group-hover:underline"
+                                  >
+                                    {winner.project}
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                  </a>
+                                ) : (
+                                  <span className="font-medium text-gray-800 dark:text-gray-200">{winner.project}</span>
+                                )}
+                                {winner.description && (
+                                  <div className="relative">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md pr-5 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-200">
+                                      {winner.description.length > 120 ?
+                                        `${winner.description.substring(0, 120)}...` :
+                                        winner.description}
+                                    </p>
+                                    {winner.description.length > 120 && (
+                                      <span className="absolute right-0 top-0 text-blue-500 dark:text-blue-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                      </span>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
                             </td>
                           )}
                         </motion.tr>
